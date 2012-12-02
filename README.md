@@ -1,6 +1,7 @@
 # KiwiImageTools
 
-TODO: Write a gem description
+Custom Image Generator
+Provide the images, text, and text properties and an image is generated with ImageMagick
 
 ## Installation
 
@@ -18,12 +19,22 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+require 'kiwi_image_tools'
+img = KiwiImageTools.new(:background_color => '#b8d2de', 
+                         :logo_image => 'logo.png', 
+                         :photo_image => 'photo.jpg', 
+                         :special => {:text => 'Title', :color => 'blue', :size => 58 }, 
+                         :details => {:text => 'Subtitle', :color => 'blue', :size => 32}, 
+                         :expires => {:text => "Expires January 29th, 2013", :color => 'black', :size => 18}, 
+                         :number => {:text => "Number 1123", :color => 'black', :size => 15}, 
+                         :contact => {:text => "123 Mayberry Road, Anytown  Phone 867-5309\nor email joe@home.com", 
+                                      :color => 'black', 
+                                      :size => 15}, 
+                         :conditions => {:text => "One vote per person.\nVoid where prohibited.\nValid at participating locations only", 
+                                         :color => 'red', 
+                                         :size => 15}
+                         )
 
-## Contributing
+img.save_image('output.png')
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+
