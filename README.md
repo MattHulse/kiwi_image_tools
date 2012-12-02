@@ -19,7 +19,7 @@ Or install it yourself as:
 
 ## Usage
 
-    ```
+    ```ruby
     require 'kiwi_image_tools'
     img = KiwiImageTools.new(:background_color => '#b8d2de', 
                          :logo_image => 'logo.png', 
