@@ -1,4 +1,4 @@
-# KiwiImageTools
+# Kiwi Image Tools
 
 Custom Image Generator
 Provide the images, text, and text properties and an image is generated with ImageMagick
