@@ -9,6 +9,7 @@ module KiwiImageTools
   SHADOW_SIZE = 5
   UPPER_TEXT_LEFT_PAD = 20
   LOWER_TEXT_LEFT_PAD = 10
+  LINE_PADDING = 12
 
   class Generator
 
@@ -87,7 +88,7 @@ module KiwiImageTools
       height = @special[:size]
       left = photo_right + UPPER_TEXT_LEFT_PAD
       top = cursor_position + height
-      cursor_position = top + height
+      cursor_position = top + height + LINE_PADDING
 
       draw_text(@special[:text], 
                @special[:color],
@@ -97,10 +98,9 @@ module KiwiImageTools
                left,
                top)
 
-      #Adjust line spacing
-      cursor_position -= 20
-      
-      
+      cursor_position -= 25 #space between these two seems too large
+
+
       ########################
       # Process Details Text #
       ########################
@@ -108,7 +108,7 @@ module KiwiImageTools
       height = @details[:size]
       left = photo_right + UPPER_TEXT_LEFT_PAD
       top = cursor_position
-      cursor_position = top + height
+      cursor_position = top + height + LINE_PADDING
 
       draw_text(@details[:text], 
                @details[:color],
@@ -118,9 +118,6 @@ module KiwiImageTools
                left,
                top)
 
-      #Adjust line spacing
-      cursor_position += height
-
 
       #######################
       # Process Expire Text #
@@ -129,7 +126,7 @@ module KiwiImageTools
       height = @expires[:size]
       left = photo_right + UPPER_TEXT_LEFT_PAD
       top = cursor_position
-      cursor_position = top + height
+      cursor_position = top + height + LINE_PADDING
 
       draw_text(@expires[:text], 
                @expires[:color],
@@ -139,9 +136,6 @@ module KiwiImageTools
                left,
                top)
 
-      #Adjust line spacing
-      cursor_position += 10
-
 
       #######################
       # Process Number Text #
@@ -150,7 +144,7 @@ module KiwiImageTools
       height = @number[:size]
       left = photo_right + UPPER_TEXT_LEFT_PAD
       top = cursor_position
-      cursor_position = top + height
+      cursor_position = top + height + LINE_PADDING
 
       draw_text(@number[:text], 
                @number[:color],
@@ -172,19 +166,19 @@ module KiwiImageTools
       height = @contact[:size] * num_lines #  times number of lines
       left = LOWER_TEXT_LEFT_PAD
       top = cursor_position
-      cursor_position = top + height
+      cursor_position = top + height + LINE_PADDING
 
       draw_text(@contact[:text], 
                @contact[:color],
                @contact[:size],
                width,
-               height,
+               height+5,
                left,
                top)
 
-      #Adjust line spacing
-      cursor_position += 10
 
+      #spacing between these two is messed up
+      cursor_position += 20
 
       ##########################
       # Process Conditions Text #
@@ -194,13 +188,13 @@ module KiwiImageTools
       height = @conditions[:size] * num_lines #  times number of lines
       left = LOWER_TEXT_LEFT_PAD
       top = cursor_position
-      cursor_position = top + height
+      cursor_position = top + height + LINE_PADDING
 
       draw_text(@conditions[:text], 
                @conditions[:color],
                @conditions[:size],
                width,
-               height,
+               height*num_lines,
                left,
                top)
       
