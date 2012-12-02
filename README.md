@@ -19,8 +19,9 @@ Or install it yourself as:
 
 ## Usage
 
-```require 'kiwi_image_tools'
-img = KiwiImageTools.new(:background_color => '#b8d2de', 
+    ```
+    require 'kiwi_image_tools'
+    img = KiwiImageTools.new(:background_color => '#b8d2de', 
                          :logo_image => 'logo.png', 
                          :photo_image => 'photo.jpg', 
                          :special => {:text => 'Title', :color => 'blue', :size => 58 }, 
@@ -35,6 +36,6 @@ img = KiwiImageTools.new(:background_color => '#b8d2de',
                                          :size => 15}
                          )
 
-img.save_image('output.png')
-```
+    img.save_image('output.png')
+    ```
 
