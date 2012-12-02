@@ -13,9 +13,9 @@ module KiwiImageTools
   class Generator
 
     def initialize(args)
-      @background_color = args[:background_color]
-      @logo_image = args[:logo]
-      @photo_image = args[:photo]
+      @color = args[:background_color]
+      @logo_image = args[:logo_image]
+      @photo_image = args[:photo_image]
       @special = args[:special]
       @details = args[:details]
       @expires = args[:expires]
@@ -27,10 +27,13 @@ module KiwiImageTools
       #####################
       # Create Base Image #
       #####################
-      @image = Image.new(DEFAULT_WIDTH,DEFAULT_HEIGHT){
-        self.background_color = background_color
+      @image = Image.new(DEFAULT_WIDTH, DEFAULT_HEIGHT){
+        #This doesn't work  because @color is being bound
+        # to the constructor's instance_eval
+        #self.background_color = @color
       }
-
+      #Work around the issue
+      @image.color_reset!(@color)
 
       ################
       # Process Logo #
@@ -40,8 +43,10 @@ module KiwiImageTools
       logo_y = LOGO_TOP_PAD
 
       #center logo if it is smaller than our image
-      logo_x = ((back.columns - logo.columns) / 2).to_i
+      logo_x = ((@image.columns - logo.columns) / 2).to_i
       logo_x = 0 if logo_x < 0
+
+      logo_bottom = logo_y + logo.rows
 
       #overlay logo
       @image = @image.composite(logo, logo_x, logo_y, OverCompositeOp)
@@ -73,22 +78,24 @@ module KiwiImageTools
       photo_right = shadow_x + shadow.columns
       photo_bottom = shadow_y + shadow.rows
 
+      cursor_position = photo_y
+
       ########################
       # Process Special Text #
       ########################
       width = @image.columns - photo_right - 10
-      height = @details[:size]
+      height = @special[:size]
       left = photo_right + UPPER_TEXT_LEFT_PAD
-      top = cursor_position
+      top = cursor_position + height
       cursor_position = top + height
 
-      self.draw_text(@special[:text], 
-                     @special[:color],
-                     @special[:size],
-                     width,
-                     height,
-                     left,
-                     top)
+      draw_text(@special[:text], 
+               @special[:color],
+               @special[:size],
+               width,
+               height,
+               left,
+               top)
 
       #Adjust line spacing
       cursor_position -= 20
@@ -103,13 +110,13 @@ module KiwiImageTools
       top = cursor_position
       cursor_position = top + height
 
-      self.draw_text(@details[:text], 
-                     @details[:color],
-                     @details[:size],
-                     width,
-                     height,
-                     left,
-                     top)
+      draw_text(@details[:text], 
+               @details[:color],
+               @details[:size],
+               width,
+               height,
+               left,
+               top)
 
       #Adjust line spacing
       cursor_position += height
@@ -119,40 +126,39 @@ module KiwiImageTools
       # Process Expire Text #
       #######################
       width = @image.columns - photo_right - 10
-      height = @details[:size]
+      height = @expires[:size]
       left = photo_right + UPPER_TEXT_LEFT_PAD
       top = cursor_position
       cursor_position = top + height
 
-      self.draw_text(@expires[:text], 
-                     @expires[:color],
-                     @expires[:size],
-                     width,
-                     height,
-                     left,
-                     top)
+      draw_text(@expires[:text], 
+               @expires[:color],
+               @expires[:size],
+               width,
+               height,
+               left,
+               top)
 
       #Adjust line spacing
-      cursor_position += height
+      cursor_position += 10
 
 
       #######################
       # Process Number Text #
       #######################
       width = @image.columns - photo_right - 10
-      height = @details[:size]
+      height = @number[:size]
       left = photo_right + UPPER_TEXT_LEFT_PAD
       top = cursor_position
       cursor_position = top + height
 
-      self.draw_text(@number[:text], 
-                     @number[:color],
-                     @number[:size],
-                     width,
-                     height,
-                     left,
-                     top)
-
+      draw_text(@number[:text], 
+               @number[:color],
+               @number[:size],
+               width,
+               height,
+               left,
+               top)
 
       #Move cursor below photo
       cursor_position = photo_bottom + 70
@@ -168,13 +174,13 @@ module KiwiImageTools
       top = cursor_position
       cursor_position = top + height
 
-      self.draw_text(@contact[:text], 
-                     @contact[:color],
-                     @contact[:size],
-                     width,
-                     height,
-                     left,
-                     top)
+      draw_text(@contact[:text], 
+               @contact[:color],
+               @contact[:size],
+               width,
+               height,
+               left,
+               top)
 
       #Adjust line spacing
       cursor_position += 10
@@ -187,29 +193,29 @@ module KiwiImageTools
       width = @image.columns
       height = @conditions[:size] * num_lines #  times number of lines
       left = LOWER_TEXT_LEFT_PAD
-      top = photo_y + text_size
+      top = cursor_position
       cursor_position = top + height
 
-      self.draw_text(@conditions[:text], 
-                     @conditions[:color],
-                     @conditions[:size],
-                     width,
-                     height,
-                     left,
-                     top)
-
+      draw_text(@conditions[:text], 
+               @conditions[:color],
+               @conditions[:size],
+               width,
+               height,
+               left,
+               top)
+      
     end
 
-    def self.display_image
+    def display_image
       @image.display
     end
 
-    def self.save_image(filename='output.png')
+    def save_image(filename='output.png')
       @image.write(filename)
     end
 
     private
-    def self.draw_text(text, color, size, width, height, left, top) 
+    def draw_text(text, color, size, width, height, left, top) 
       Draw.new.annotate(@image, width, height, left, top, text) { 
         self.fill = color
         self.font_family = 'arial'
