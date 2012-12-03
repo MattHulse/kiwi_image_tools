@@ -57,7 +57,8 @@ module KiwiImageTools
       # Process Photo #
       #################
       photo = Image.read(@photo_image).first
-      photo.resize_to_fit(PHOTO_WIDTH)
+      photo.resize_to_fit!(PHOTO_WIDTH)
+
 
       photo_x = PHOTO_LEFT_PAD
       photo_y = logo_bottom + PHOTO_TOP_PAD
