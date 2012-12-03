@@ -9,7 +9,7 @@ module KiwiImageTools
   SHADOW_SIZE = 5
   UPPER_TEXT_LEFT_PAD = 20
   LOWER_TEXT_LEFT_PAD = 10
-  LINE_PADDING = 12
+  LINE_PADDING = 8
 
   class Generator
 
