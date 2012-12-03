@@ -5,7 +5,7 @@ require 'kiwi_image_tools'
 g = KiwiImageTools::Generator.new(
     :background_color => '#b8d2de',
     :logo_image => 'test/images/skipster.png',
-    :photo_image => 'test/images/photo.jpg',
+    :photo_image => 'test/images/Photo-landscape.jpg',
     :special => {:text => 'Summer',
                  :color => 'blue',
                  :size => 58 },
@@ -26,8 +26,8 @@ g = KiwiImageTools::Generator.new(
                 :size => 15}
 )
 
+g.save_image('output.png')
 g.display_image
-#g.save_image('output.png')
 
 
 g = KiwiImageTools::Generator.new(
@@ -54,14 +54,14 @@ g = KiwiImageTools::Generator.new(
                 :size => 18}
 )
 
+g.save_image('output.png')
 g.display_image
-#g.save_image('output.png')
 
 
 g = KiwiImageTools::Generator.new(
     :background_color => '#b8d2de',
     :logo_image => 'test/images/logo.png',
-    :photo_image => 'test/images/photo.jpg',
+    :photo_image => 'test/images/Photo-landscape.jpg',
     :special => {:text => 'Summer',
                  :color => 'blue',
                  :size => 32 },
@@ -82,5 +82,5 @@ g = KiwiImageTools::Generator.new(
                 :size => 18}
 )
 
+g.save_image('output.png')
 g.display_image
-#g.save_image('output.png')
