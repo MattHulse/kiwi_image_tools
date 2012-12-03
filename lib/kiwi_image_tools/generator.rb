@@ -99,7 +99,7 @@ module KiwiImageTools
                left,
                top)
 
-      cursor_position -= 25 #space between these two seems too large
+      cursor_position -= height / 2 #space between these two seems too large so adjusting
 
 
       ########################
@@ -177,9 +177,6 @@ module KiwiImageTools
                left,
                top)
 
-
-      #spacing between these two is messed up
-      cursor_position += 20
 
       ##########################
       # Process Conditions Text #
