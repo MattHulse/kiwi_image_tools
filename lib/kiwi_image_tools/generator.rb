@@ -11,7 +11,10 @@ module KiwiImageTools
   LOWER_TEXT_LEFT_PAD = 10
   LINE_PADDING = 8
 
+  KIWI_LOG = "/tmp/kiwi.log"
+
   class Generator
+    #attr_accessor :logging
 
     def initialize(args)
       @color = args[:background_color]
@@ -23,6 +26,17 @@ module KiwiImageTools
       @number = args[:number]
       @contact = args[:contact]
       @conditions = args[:conditions]
+
+      #if args[:logging] then
+        #@logging = true
+      #end
+
+      #if @logging then
+        #File.open(KIWI_LOG,'a+'){|f|
+          #f.puts(args.inspect)
+          #f.puts("===========")
+        #}
+      #end
 
 
       #####################
@@ -162,7 +176,13 @@ module KiwiImageTools
       ########################
       # Process Contact Text #
       ########################
-      num_lines = @contact[:text].split("\n").length
+      num_lines = @contact[:text].split('\n').length
+
+      if num_lines == 1 then
+        #check for actual new lines (not just literal)
+        num_lines = @contact[:text].split("\n").length
+      end
+
       width = @image.columns
       height = @contact[:size] * num_lines #  times number of lines
       left = LOWER_TEXT_LEFT_PAD
